@@ -7,14 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
 
 namespace Bibik_Course_project
-{ 
+{
     public partial class Form1 : Form
     {
         private bool Mode; // Режим дозволу / заборони введення даних
         private MajorWork MajorObject; // Створення об'єкта класу MajorWork
-        
+
         public Form1()
         {
             InitializeComponent();
@@ -47,6 +48,7 @@ namespace Bibik_Course_project
                 tClock.Start();
                 bStart.Text = "Стоп"; // зміна тексту на кнопці на "Стоп"
                 this.Mode = false;
+                пускToolStripMenuItem.Text = "Стоп";
             }
             else
             {
@@ -57,6 +59,7 @@ namespace Bibik_Course_project
                 MajorObject.Write(tbInput.Text);// Запис даних у об'єкт
                 MajorObject.Task();// Обробка даних
                 label1.Text = MajorObject.Read();// Відображення результату
+                пускToolStripMenuItem.Text = "Старт";
             }
         }
 
@@ -83,6 +86,53 @@ namespace Bibik_Course_project
             s = (System.DateTime.Now - MajorObject.GetTime()).ToString();
             MessageBox.Show(s, "Час роботи програми"); // Виведення часу роботи програми і
             //повідомлення "Час роботи програми" на екран
+        }
+
+        private void закритиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void проПрограмуToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            About A = new About();
+            A.ShowDialog();
+        }
+
+        private void зберегтиToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if (sfdSave.ShowDialog() == DialogResult.OK)// Виклик діалогового вікна збереження файлу
+            {
+                MessageBox.Show(sfdSave.FileName);
+            }
+        }
+
+        private void відкритиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (ofdOpen.ShowDialog() == DialogResult.OK) // Виклик діалогового вікна відкриття файлу
+
+            {
+                MessageBox.Show(ofdOpen.FileName);
+            }
+        }
+
+        private void проНакопичувачіToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string[] Disks = System.IO.Directory.GetLogicalDrives();
+            string disk = "";
+            for (int i = 0; i < Disks.Length; i++)
+            {
+                try
+                {
+                    System.IO.DriveInfo D = new System.IO.DriveInfo(Disks[i]);
+                    disk += D.Name + "Об'єм - " + D.TotalSize/ 1073741824 + " GB / Доступно - " + D.TotalFreeSpace/1073741824 +" GB "+ (char)13;
+                }
+                catch
+                {
+                    disk += Disks[i] + "- не готовий" + (char)13;
+                }
+            }
+            MessageBox.Show(disk, "Накопичувачі");
         }
     }
 }
