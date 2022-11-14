@@ -85,7 +85,8 @@ namespace Bibik_Course_project
         {
             string s;
             s = (System.DateTime.Now - MajorObject.GetTime()).ToString();
-            MessageBox.Show(s, "Час роботи програми"); // Виведення часу роботи програми і
+            MessageBox.Show (s, "Час роботи програми"); 
+            // Виведення часу роботи програми і
             //повідомлення "Час роботи програми" на екран
         }
 
@@ -99,23 +100,13 @@ namespace Bibik_Course_project
             About A = new About();
             A.ShowDialog();
         }
-
-        private void зберегтиToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            if (sfdSave.ShowDialog() == DialogResult.OK)// Виклик діалогового вікна збереження файлу
-            {
-                MajorObject.WriteSaveFileName(sfdSave.FileName); // Запис імені файлу для збереження
-                MajorObject.Generator();
-                MajorObject.SaveToFile(); // метод збереження в файл }
-            }
-        }
-
         private void відкритиToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (ofdOpen.ShowDialog() == DialogResult.OK) // Виклик діалогового вікна відкриття файлу
 
             {
-                MessageBox.Show(ofdOpen.FileName);
+                MajorObject.WriteOpenFileName(ofdOpen.FileName); // відкриттяфайлу 
+                MajorObject.ReadFromFile(dgwOpen); // читання даних з файлу
             }
         }
 
@@ -143,7 +134,7 @@ namespace Bibik_Course_project
             if (MajorObject.SaveFileNameExists()) // задане ім’я файлу існує?
                 MajorObject.SaveToFile(); // зберегти дані в файл
             else
-                 зберегтиToolStripMenuItem_Click(sender, e);
+                зберегтиякToolStripMenuItem1_Click(sender,e);
 
         }
 
@@ -161,6 +152,23 @@ namespace Bibik_Course_project
                 MessageBoxButtons.YesNo) == DialogResult.No)
                     e.Cancel = true; // припинити закриття
         }
+
+        private void bSearch_Click(object sender, EventArgs e)
+        {
+            MajorObject.Find(tbSearch.Text); //пошук
+        }
+
+        private void зберегтиякToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if (sfdSave.ShowDialog() == DialogResult.OK)// Виклик діалогового вікна збереження файлу
+{
+                MajorObject.WriteSaveFileName(sfdSave.FileName); // Запис імені файлу для збереження
+                MajorObject.Generator();
+                MajorObject.SaveToFile(); // метод збереження в файл
+            }
+        }
+       
+        
     }
 }
 
