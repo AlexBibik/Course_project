@@ -36,8 +36,8 @@ namespace Bibik_Course_project
             About A = new About(); // створення форми About
             A.tAbout.Start();
             A.ShowDialog(); // відображення діалогового вікна About
-            MajorObject = new MajorWork();
             this.Mode = true;
+            
         }
 
         private void bStart_Click(object sender, EventArgs e)
